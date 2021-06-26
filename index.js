@@ -1,4 +1,13 @@
-const myLeads = [];
+let myLeads = [];
+let storedLeads = JSON.parse(localStorage.getItem("myLeads"));
+
+// localStorage.setItem("myLeads", "www.examplelead.com");
+function loadLeads() {
+  if (storedLeads) {
+    myLeads = storedLeads;
+    displayLeads();
+  }
+}
 
 function saveLead() {
   let newLead = inputEl.value;
@@ -8,24 +17,17 @@ function saveLead() {
     myLeads.push(newLead);
     console.log(myLeads);
     inputEl.value = "";
+    localStorage.setItem("myLeads", JSON.stringify(myLeads));
   }
   displayLeads();
 }
 
-// function saveLeadEnter(e) {
-//   if (e.key !== 'enter')
-// }
-
 function displayLeads() {
-  // leadTracker.innerHTML = "";
   let listItems = "";
   if (!myLeads) {
     return;
   } else {
     for (i = 0; i < myLeads.length; i++) {
-      // const addLead = document.createElement("li");
-      // addLead.textContent = myLeads[i];
-      // leadTracker.appendChild(addLead);
       listItems += `<li><a href="${myLeads[i]}" target="_blank">${myLeads[i]}</a></li>`;
     }
     leadTracker.innerHTML = listItems;
@@ -43,3 +45,6 @@ inputEl.addEventListener("keyup", function (event) {
     saveLead();
   }
 });
+
+loadLeads();
+// displayLeads();
